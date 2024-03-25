@@ -59,7 +59,7 @@
 								<p class="contact-title">Email</p>
 
 								<a href="mailto:wathika02@gmail.com" class="contact-link"
-									>wathika02@gmail.com</a
+									>wathika@proton.me</a
 								>
 							</div>
 						</li>
@@ -72,9 +72,7 @@
 							<div class="contact-info">
 								<p class="contact-title">Phone</p>
 
-								<a href="tel:+254752272449" class="contact-link"
-									>+254752272449</a
-								>
+								<a href="tel:+254752272449" class="contact-link">+25474....</a>
 							</div>
 						</li>
 
@@ -748,20 +746,24 @@
 								data-filter-item
 								data-category="web development"
 							>
-								<a href="#">
+								<a
+									href="https://uninotes-yne6.onrender.com/dash"
+									rel="noreferrer"
+									target="_blank"
+								>
 									<figure class="project-img">
 										<div class="project-item-icon-box">
 											<ion-icon name="eye-outline"></ion-icon>
 										</div>
 
 										<img
-											src="./assets/images/project-1.jpg"
-											alt="finance"
+											src="./assets/images/uninotes-yne6.onrender.com_dash.png"
+											alt="uninotes"
 											loading="lazy"
 										/>
 									</figure>
 
-									<h3 class="project-title">Finance</h3>
+									<h3 class="project-title">Uninotes</h3>
 
 									<p class="project-category">Web development</p>
 								</a>
@@ -779,19 +781,19 @@
 										</div>
 
 										<img
-											src="./assets/images/project-2.png"
-											alt="orizon"
+											src="./assets/images/library-scy5.onrender.com_books.png"
+											alt="lib"
 											loading="lazy"
 										/>
 									</figure>
 
-									<h3 class="project-title">Orizon</h3>
+									<h3 class="project-title">Library</h3>
 
 									<p class="project-category">Web development</p>
 								</a>
 							</li>
 
-							<li
+							<!-- <li
 								class="project-item active"
 								data-filter-item
 								data-category="web design"
@@ -957,7 +959,7 @@
 
 									<p class="project-category">Web development</p>
 								</a>
-							</li>
+							</li> -->
 						</ul>
 					</section>
 				</article>
@@ -1170,10 +1172,13 @@
 					<section class="mapbox" data-mapbox>
 						<figure>
 							<iframe
-								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
+								src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.0850884343417!2d37.0153578620028!3d-1.0984705035525049!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1711394871247!5m2!1sen!2ske"
 								width="400"
 								height="300"
+								style="border: 0"
+								allowfullscreen=""
 								loading="lazy"
+								referrerpolicy="no-referrer-when-downgrade"
 							></iframe>
 						</figure>
 					</section>
@@ -1181,11 +1186,12 @@
 					<section class="contact-form">
 						<h3 class="h3 form-title">Contact Form</h3>
 
-						<form action="#" class="form" data-form>
+						<form id="contactForm" action="/submit-form" class="form" data-form>
 							<div class="input-wrapper">
 								<input
 									type="text"
 									name="fullname"
+									id="fullname"
 									class="form-input"
 									placeholder="Full name"
 									required
@@ -1195,6 +1201,7 @@
 								<input
 									type="email"
 									name="email"
+									id="email"
 									class="form-input"
 									placeholder="Email address"
 									required
@@ -1204,13 +1211,20 @@
 
 							<textarea
 								name="message"
+								id="message"
 								class="form-input"
 								placeholder="Your Message"
 								required
 								data-form-input
 							></textarea>
 
-							<button class="form-btn" type="submit" disabled data-form-btn>
+							<button
+								id="submitButton"
+								class="form-btn"
+								type="submit"
+								disabled
+								data-form-btn
+							>
 								<ion-icon name="paper-plane"></ion-icon>
 								<span>Send Message</span>
 							</button>
@@ -1224,7 +1238,90 @@
     - custom js link
   -->
 		<script src="./assets/js/script.js"></script>
+		<script>
+			document
+				.getElementById('contactForm')
+				.addEventListener('submit', function (event) {
+					event.preventDefault(); // Prevent the form from submitting
+					const fullname = document.getElementById('fullname').value;
+					const email = document.getElementById('email').value;
+					const message = document.getElementById('message').value;
 
+					// You can use fetch to send the form data to the server-side script
+					fetch('/submit-form', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							fullname: fullname,
+							email: email,
+							message: message,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							console.log(data);
+							// Optionally, you can show a success message or redirect the user
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+							// Optionally, you can show an error message
+						});
+				});
+
+			// Enable the submit button when the form is valid
+			document
+				.getElementById('contactForm')
+				.addEventListener('input', function () {
+					const isValid = document
+						.getElementById('contactForm')
+						.checkValidity();
+					document.getElementById('submitButton').disabled = !isValid;
+				});
+		</script>
+		<script>
+			document
+				.getElementById('contactForm')
+				.addEventListener('submit', function (event) {
+					event.preventDefault(); // Prevent the form from submitting
+					const fullname = document.getElementById('fullname').value;
+					const email = document.getElementById('email').value;
+					const message = document.getElementById('message').value;
+
+					// You can use fetch to send the form data to the server-side script
+					fetch('/submit-form', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							fullname: fullname,
+							email: email,
+							message: message,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							console.log(data);
+							// Optionally, you can show a success message or redirect the user
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+							// Optionally, you can show an error message
+						});
+				});
+
+			// Enable the submit button when the form is valid
+			document
+				.getElementById('contactForm')
+				.addEventListener('input', function () {
+					const isValid = document
+						.getElementById('contactForm')
+						.checkValidity();
+					document.getElementById('submitButton').disabled = !isValid;
+				});
+		</script>
 		<!--
     - ionicon link
   -->

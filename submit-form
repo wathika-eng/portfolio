@@ -1,0 +1,36 @@
+document
+	.getElementById('contactForm')
+	.addEventListener('submit', function (event) {
+		event.preventDefault(); // Prevent the form from submitting
+		const fullname = document.getElementById('fullname').value;
+		const email = document.getElementById('email').value;
+		const message = document.getElementById('message').value;
+
+		// You can use fetch to send the form data to the server-side script
+		fetch('/submit-form', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				fullname: fullname,
+				email: email,
+				message: message,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				// Optionally, you can show a success message or redirect the user
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+				// Optionally, you can show an error message
+			});
+	});
+
+// Enable the submit button when the form is valid
+document.getElementById('contactForm').addEventListener('input', function () {
+	const isValid = document.getElementById('contactForm').checkValidity();
+	document.getElementById('submitButton').disabled = !isValid;
+});
