@@ -5,3 +5,5 @@ This template has been developed by [@codewithsadee](https://www.twitter.com/cod
 Donations: [Patreon](https://patreon.com/codewithsadee).
 
 License: MIT (see LICENSE file).
+
+![image](https://github.com/wathika-eng/portfolio/assets/71040609/ead0ba02-2b4f-4c43-a34a-eec85b37c790)
