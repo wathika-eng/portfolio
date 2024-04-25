@@ -19,6 +19,12 @@
 			href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
 			rel="stylesheet"
 		/>
+		<script defer>
+			// 404 error handler
+			if (window.location.href.indexOf('404') > -1) {
+				window.location.href = '/';
+			}
+		</script>
 	</head>
 
 	<body>
