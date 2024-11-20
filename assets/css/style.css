@@ -156,6 +156,9 @@ textarea {
 	color: var(--smoky-black);
 }
 
+/* h4 {
+	color: whitesmoke;
+} */
 :focus {
 	outline-color: var(--orange-yellow-crayola);
 }
@@ -1004,36 +1007,43 @@ main {
 .select-item button:hover {
 	--eerie-black-2: hsl(240, 2%, 20%);
 }
-
+/* Project List Styling */
 .project-list {
 	display: grid;
-	grid-template-columns: 1fr;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(280px, 1fr)
+	); /* Auto adjusts based on screen size */
 	gap: 30px;
 	margin-bottom: 10px;
 }
 
+/* Project Item Styling */
 .project-item {
-	display: none;
+	display: none; /* Initially hide the items */
+	background-color: #1e1e1e; /* Dark background for the project card */
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Adds shadow for better separation */
+	transition: transform 0.3s ease; /* Smooth animation on hover */
 }
 
 .project-item.active {
-	display: block;
-	animation: scaleUp 0.25s ease forwards;
+	display: block; /* Show when active */
+	animation: scaleUp 0.25s ease forwards; /* Scale up effect */
 }
 
+/* Hover Animation */
 @keyframes scaleUp {
 	0% {
-		transform: scale(0.5);
+		transform: scale(0.8); /* Initial scale smaller */
 	}
 	100% {
-		transform: scale(1);
+		transform: scale(1); /* End with full scale */
 	}
 }
 
-.project-item > a {
-	width: 100%;
-}
-
+/* Project Image Styles */
 .project-img {
 	position: relative;
 	width: 100%;
@@ -1043,76 +1053,137 @@ main {
 	margin-bottom: 15px;
 }
 
-.project-img::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: transparent;
-	z-index: 1;
-	transition: var(--transition-1);
-}
-
-.project-item > a:hover .project-img::before {
-	background: hsla(0, 0%, 0%, 0.5);
-}
-
-.project-item-icon-box {
-	--scale: 0.8;
-
-	background: var(--jet);
-	color: var(--orange-yellow-crayola);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%) scale(var(--scale));
-	font-size: 20px;
-	padding: 18px;
-	border-radius: 12px;
-	opacity: 0;
-	z-index: 1;
-	transition: var(--transition-1);
-}
-
-.project-item > a:hover .project-item-icon-box {
-	--scale: 1;
-	opacity: 1;
-}
-
-.project-item-icon-box ion-icon {
-	--ionicon-stroke-width: 50px;
-}
-
 .project-img img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transition: var(--transition-1);
+	transition: transform 0.3s ease; /* Smooth zoom on hover */
 }
 
 .project-item > a:hover img {
-	transform: scale(1.1);
+	transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
-.project-title,
-.project-category {
-	margin-left: 10px;
-}
-
+/* Project Title Styling */
 .project-title {
-	color: var(--white-2);
-	font-size: var(--fs-5);
-	font-weight: var(--fw-400);
-	text-transform: capitalize;
-	line-height: 1.3;
+	color: #fff;
+	font-size: 1.5em; /* Adjusted for readability */
+	font-weight: bold;
+	text-align: center;
+	margin-top: 15px; /* Space between image and title */
+	text-transform: capitalize; /* Ensures first letter of each word is capitalized */
 }
 
+/* Project Description Styling */
+.project-description {
+	color: white;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px; /* Space below description */
+	font-size: 1em;
+	line-height: 1.5;
+}
+
+/* Source Code Link Styling */
+.source-code {
+	font-size: 1em;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.source-code a {
+	color: var(--white-2); /* Consistent with the title color */
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.source-code a:hover {
+	color: #f39c12; /* Gold color on hover */
+	text-decoration: underline; /* Underline on hover */
+}
+
+/* Website Link Styling */
+.website-link {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.website-link a {
+	color: #8e44ad; /* Purple for website link */
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.website-link a:hover {
+	text-decoration: underline;
+}
+
+/* Category Styling */
 .project-category {
-	color: var(--light-gray-70);
-	font-size: var(--fs-6);
-	font-weight: var(--fw-300);
+	color: #bdc3c7; /* Light gray color */
+	font-size: 1em;
+	text-align: center;
+	margin-top: 10px;
+	font-style: italic;
+}
+
+/* Modal Styling for Full Image View */
+.modal {
+	display: none; /* Hidden initially */
+	position: fixed; /* Stay in place */
+	z-index: 1000; /* Ensure it's on top */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+	text-align: center;
+	padding-top: 5%;
+}
+
+.modal-content {
+	max-width: 80%; /* Limit image size */
+	max-height: 80%; /* Limit image size */
+}
+
+#caption {
+	color: white;
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+/* Close Modal Button */
+.close-modal {
+	position: absolute;
+	top: 20px;
+	right: 40px;
+	color: white;
+	font-size: 36px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+	color: #f1f1f1;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+	.project-list {
+		grid-template-columns: repeat(
+			auto-fill,
+			minmax(250px, 1fr)
+		); /* Adjust grid for smaller screens */
+	}
+}
+
+@media (max-width: 480px) {
+	.project-list {
+		grid-template-columns: 1fr; /* Stack items on very small screens */
+	}
 }
 
 /*-----------------------------------*\
