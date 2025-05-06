@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import { v4 as uuidv4 } from 'uuid';
+import { TrashIcon, PlusIcon } from '@heroicons/react/solid';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 
 // Data
 import yourData from '../data/portfolio.json';
@@ -49,6 +51,7 @@ const Edit = () => {
 						'https://images.unsplash.com/photo-1517479149777-5f3b1511d5ad?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTAyfHxwYXN0ZWx8ZW58MHx8MHw%3D&auto=format&fit=crop&w=400&q=60',
 
 					url: 'http://chetanverma.com/',
+					githublink: '',
 				},
 			],
 		});
@@ -148,7 +151,7 @@ const Edit = () => {
 	};
 
 	return (
-		<div className={`container mx-auto ${data.showCursor && 'cursor-none'}`}>
+		<div className={`container mx-auto ${data.showCursor && 'cursor-pointer'}`}>
 			<Header isBlog></Header>
 			{data.showCursor && <Cursor />}
 			<div className='mt-10'>
@@ -326,86 +329,171 @@ const Edit = () => {
 				)}
 				{/* PROJECTS */}
 				{currentTabs === 'PROJECTS' && (
-					<>
-						<div className='mt-10'>
+					<div className='space-y-8'>
+						<div className='space-y-8'>
 							{data.projects.map((project, index) => (
-								<div className='mt-10' key={project.id}>
-									<div className='flex items-center justify-between'>
-										<h1 className='text-2xl'>{project.title}</h1>
+								<div
+									key={project.id}
+									className='p-6 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition-shadow'>
+									<div className='flex items-center justify-between mb-6'>
+										<h1 className='text-2xl font-bold text-gray-800 dark:text-white'>
+											Project #{index + 1}
+										</h1>
 										<Button
 											onClick={() => deleteProject(project.id)}
-											type='primary'>
+											type='danger'
+											className='hover:scale-105 transition-transform'>
+											<TrashIcon className='w-5 h-5 mr-1' />
 											Delete
 										</Button>
 									</div>
 
-									<div className='flex items-center mt-5'>
-										<label className='w-1/5 text-lg opacity-50'>Title</label>
-										<input
-											value={project.title}
-											onChange={(e) =>
-												editProjects(index, {
-													...project,
-													title: e.target.value,
-												})
-											}
-											className='w-4/5 ml-10 p-2 rounded-md shadow-lg border-2'
-											type='text'></input>
+									<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+										<div className='space-y-4'>
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													Project Title *
+												</label>
+												<input
+													value={project.title}
+													onChange={(e) =>
+														editProjects(index, {
+															...project,
+															title: e.target.value,
+														})
+													}
+													placeholder='My Awesome Project'
+													className='w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+													type='text'
+													required
+												/>
+											</div>
+
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													Description *
+												</label>
+												<textarea
+													value={project.description}
+													onChange={(e) =>
+														editProjects(index, {
+															...project,
+															description: e.target.value,
+														})
+													}
+													placeholder='Brief description of your project...'
+													className='w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white min-h-[100px]'
+													required
+												/>
+											</div>
+										</div>
+
+										<div className='space-y-4'>
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													Image URL
+												</label>
+												<div className='flex items-center space-x-2'>
+													<input
+														value={project.imageSrc}
+														onChange={(e) =>
+															editProjects(index, {
+																...project,
+																imageSrc: e.target.value,
+															})
+														}
+														placeholder='https://example.com/image.jpg'
+														className='flex-1 p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+														type='url'
+													/>
+													{project.imageSrc && (
+														<div className='w-10 h-10 rounded-md overflow-hidden border'>
+															<Image
+																width={800}
+																height={600}
+																quality={100}
+																src={project.imageSrc}
+																alt='Preview'
+																className='w-full h-full object-cover'
+																onError={(e) =>
+																	(e.target.src = '/placeholder-image.png')
+																}
+															/>
+														</div>
+													)}
+												</div>
+											</div>
+
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													Project URL
+												</label>
+												<input
+													value={project.url}
+													onChange={(e) =>
+														editProjects(index, {
+															...project,
+															url: e.target.value,
+														})
+													}
+													placeholder='https://example.com'
+													className='w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+													type='url'
+												/>
+											</div>
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													GitHub Link
+												</label>
+												<input
+													value={project.githublink}
+													onChange={(e) =>
+														editProjects(index, {
+															...project,
+															githublink: e.target.value,
+														})
+													}
+													placeholder='https://example.com'
+													className='w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+													type='url'
+												/>
+											</div>
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+													Technologies
+												</label>
+												<input
+													value={project.technologies?.join(', ') || ''}
+													onChange={(e) =>
+														editProjects(index, {
+															...project,
+															technologies: e.target.value
+																.split(',')
+																.map((t) => t.trim()),
+														})
+													}
+													placeholder='React, Node.js, MongoDB'
+													className='w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white'
+													type='text'
+												/>
+												<p className='text-xs text-gray-500 mt-1'>
+													Separate with commas
+												</p>
+											</div>
+										</div>
 									</div>
-									<div className='flex items-center mt-2'>
-										<label className='w-1/5 text-lg opacity-50'>
-											Description
-										</label>
-										<input
-											value={project.description}
-											onChange={(e) =>
-												editProjects(index, {
-													...project,
-													description: e.target.value,
-												})
-											}
-											className='w-4/5 ml-10 p-2 rounded-md shadow-lg border-2'
-											type='text'></input>
-									</div>
-									<div className='flex items-center mt-2'>
-										<label className='w-1/5 text-lg opacity-50'>
-											Image Source
-										</label>
-										<input
-											value={project.imageSrc}
-											onChange={(e) =>
-												editProjects(index, {
-													...project,
-													imageSrc: e.target.value,
-												})
-											}
-											className='w-4/5 ml-10 p-2 rounded-md shadow-lg border-2'
-											type='text'></input>
-									</div>
-									<div className='flex items-center mt-2'>
-										<label className='w-1/5 text-lg opacity-50'>url</label>
-										<input
-											value={project.url}
-											onChange={(e) =>
-												editProjects(index, {
-													...project,
-													url: e.target.value,
-												})
-											}
-											className='w-4/5 ml-10 p-2 rounded-md shadow-lg border-2'
-											type='text'></input>
-									</div>
-									<hr className='my-10'></hr>
 								</div>
 							))}
 						</div>
 
-						<div className='my-10'>
-							<Button onClick={addProject} type='primary'>
-								Add Project +
-							</Button>
-						</div>
-					</>
+						<Button
+							onClick={addProject}
+							type='primary'
+							className='w-full py-3 text-lg hover:scale-[1.02] transition-transform'>
+							<PlusIcon className='w-5 h-5 mr-2' />
+							Add New Project
+						</Button>
+					</div>
 				)}
 				{/* SERVICES */}
 				{currentTabs === 'SERVICES' && (

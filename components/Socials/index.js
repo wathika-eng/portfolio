@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '../Button';
-
 import yourData from '../../data/portfolio.json';
 
 const Socials = ({ className }) => {
