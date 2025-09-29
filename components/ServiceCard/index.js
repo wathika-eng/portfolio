@@ -1,26 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import React from "react";
+import { motion } from "framer-motion";
+import { 
+  FiCode, 
+  FiShield, 
+  FiHeadphones, 
+  FiServer, 
+  FiUsers 
+} from "react-icons/fi";
 
 const ServiceCard = ({ name, description }) => {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState();
+  // Map service names to icons
+  const getServiceIcon = (serviceName) => {
+    const iconMap = {
+      "API Testing": FiShield,
+      "API Development & Integration": FiCode,
+      "Tech Support": FiHeadphones,
+      "Backend Development": FiServer,
+      "Training & Mentorship": FiUsers,
+    };
+    
+    return iconMap[serviceName] || FiCode;
+  };
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const IconComponent = getServiceIcon(name);
+
   return (
-    <div
-      className={`w-full p-2 mob:p-4 rounded-lg transition-all ease-out duration-300 ${
-        mounted && theme === "dark" ? "hover:bg-slate-800" : "hover:bg-slate-50"
-      } hover:scale-105 link`}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      whileHover={{ y: -5 }}
+      className="group bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-600"
     >
-      <h1 className="text-3xl">{name ? name : "Heading"}</h1>
-      <p className="mt-5 opacity-40 text-xl">
-        {description
-          ? description
-          : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "}
-      </p>
-    </div>
+      {/* Icon */}
+      <div className="mb-6">
+        <div className="w-16 h-16 bg-gray-100 dark:bg-gray-600 rounded-lg flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-500 transition-colors duration-300">
+          <IconComponent className="w-8 h-8 text-gray-700 dark:text-gray-300" />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+          {name || "Service Name"}
+        </h3>
+        
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+          {description || "Service description goes here. This should provide a clear overview of what this service entails and how it benefits clients."}
+        </p>
+      </div>
+    </motion.div>
   );
 };
 

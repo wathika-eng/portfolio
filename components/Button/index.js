@@ -2,32 +2,45 @@ import React from "react";
 import { useTheme } from "next-themes";
 import data from "../../data/portfolio.json";
 
-const Button = ({ children, type, onClick, classes }) => {
+const Button = ({ children, type, onClick, classes, className }) => {
   const { theme } = useTheme();
-  if (type === "primary") {
+  
+  // If custom className is provided, use it directly
+  if (className) {
     return (
       <button
         onClick={onClick}
         type="button"
-        className={`text-sm tablet:text-base p-1 laptop:p-2 m-1 laptop:m-2 rounded-lg ${
-          theme === "dark" ? "bg-white text-black" : "bg-black text-white"
-        }  transition-all duration-300 ease-out first:ml-0 hover:scale-105 active:scale-100 link ${
-          data.showCursor && "cursor-none"
-        }  ${classes}`}
+        className={`${className} ${data.showCursor && "cursor-none"}`}
       >
         {children}
       </button>
     );
   }
+  
+  if (type === "primary") {
+    return (
+      <button
+        onClick={onClick}
+        type="button"
+        className={`text-sm tablet:text-base px-6 py-3 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all duration-300 ease-out hover:scale-105 active:scale-100 shadow-lg hover:shadow-xl ${
+          data.showCursor && "cursor-none"
+        } ${classes}`}
+      >
+        {children}
+      </button>
+    );
+  }
+  
   return (
     <button
       onClick={onClick}
       type="button"
-      className={`text-sm tablet:text-base p-1 laptop:p-2 m-1 laptop:m-2 rounded-lg flex items-center transition-all ease-out duration-300 ${
+      className={`text-sm tablet:text-base px-4 py-2 rounded-lg flex items-center transition-all ease-out duration-300 ${
         theme === "dark"
-          ? "hover:bg-slate-600 text-white"
-          : "hover:bg-slate-100"
-      } hover:scale-105 active:scale-100  tablet:first:ml-0  ${
+          ? "hover:bg-gray-800 text-gray-300 hover:text-white"
+          : "hover:bg-gray-100 text-gray-700 hover:text-gray-900"
+      } hover:scale-105 active:scale-100 font-medium ${
         data.showCursor && "cursor-none"
       } ${classes} link`}
     >
