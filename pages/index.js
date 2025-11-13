@@ -10,15 +10,15 @@ import Head from 'next/head';
 import Button from '../components/Button';
 import Link from 'next/link';
 import Cursor from '../components/Cursor';
-import { 
-	SiDjango, 
-	SiJavascript, 
-	SiPython, 
-	SiReact, 
-	SiGo, 
-	SiPostgresql, 
-	SiMongodb, 
-	SiDocker, 
+import {
+	SiDjango,
+	SiJavascript,
+	SiPython,
+	SiReact,
+	SiGo,
+	SiPostgresql,
+	SiMongodb,
+	SiDocker,
 	SiNextdotjs,
 	SiTailwindcss,
 	SiTypescript,
@@ -30,10 +30,11 @@ import {
 	SiGit,
 	SiLinux,
 	SiHtml5,
-	SiCss3
-} from 'react-icons/si';
-
-// Local Data
+	SiCss3,
+	SiDart,
+	SiFlutter,
+	SiPostman
+} from 'react-icons/si';// Local Data
 import data from '../data/portfolio.json';
 
 export default function Home() {
@@ -52,6 +53,8 @@ export default function Home() {
 			'JavaScript': { icon: SiJavascript, color: 'text-yellow-500' },
 			'Python': { icon: SiPython, color: 'text-blue-500' },
 			'React': { icon: SiReact, color: 'text-blue-400' },
+			'React Native': { icon: SiReact, color: 'text-blue-400' },
+			'ReactNative': { icon: SiReact, color: 'text-blue-400' },
 			'Go': { icon: SiGo, color: 'text-blue-400' },
 			'Golang': { icon: SiGo, color: 'text-blue-400' },
 			'PostgreSQL': { icon: SiPostgresql, color: 'text-blue-700' },
@@ -70,6 +73,9 @@ export default function Home() {
 			'Linux': { icon: SiLinux, color: 'text-gray-800' },
 			'HTML': { icon: SiHtml5, color: 'text-orange-600' },
 			'CSS': { icon: SiCss3, color: 'text-blue-600' },
+			'Dart': { icon: SiDart, color: 'text-blue-500' },
+			'Flutter': { icon: SiFlutter, color: 'text-blue-400' },
+			'Postman': { icon: SiPostman, color: 'text-orange-500' },
 		};
 		
 		return techMap[tech] || { icon: null, color: 'text-gray-600' };
@@ -189,7 +195,9 @@ export default function Home() {
 									description={project.description}
 									technologies={project.technologies}
 									githubUrl={project.githublink}
-									onClick={() => window.open(project.url)}
+									liveUrl={project.url}
+									images={project.images || [project.imageSrc]}
+									project={project}
 								/>
 							))}
 						</div>

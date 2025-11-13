@@ -75,6 +75,15 @@ body {
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
@@ -87,6 +96,17 @@ body {
   animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
+}
+
 /* Focus styles */
 button:focus,
 a:focus {
@@ -94,9 +114,27 @@ a:focus {
   outline-offset: 2px;
 }
 
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Loading states */
 .skeleton {
   @apply bg-gray-200 dark:bg-gray-700 animate-pulse;
+}
+
+/* Image loading placeholder */
+.image-placeholder {
+  @apply bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Tech badge styles */
+.tech-badge {
+  @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all duration-200;
+  @apply hover:scale-105 hover:shadow-md;
 }
 
 /* Improved link styles */

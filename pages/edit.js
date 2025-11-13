@@ -424,6 +424,74 @@ const Edit = () => {
 												</div>
 											</div>
 
+											{/* Multiple Images Field */}
+											<div>
+												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+													Gallery Images
+												</label>
+												<div className='space-y-2'>
+													{(project.images || [project.imageSrc]).map((imageUrl, imgIndex) => (
+														<div key={imgIndex} className='flex items-center space-x-2'>
+															<input
+																value={imageUrl}
+																onChange={(e) => {
+																	const newImages = [...(project.images || [project.imageSrc])];
+																	newImages[imgIndex] = e.target.value;
+																	editProjects(index, {
+																		...project,
+																		images: newImages,
+																	});
+																}}
+																placeholder='https://example.com/image.jpg'
+																className='flex-1 p-2 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm'
+																type='url'
+															/>
+															{imageUrl && (
+																<div className='w-8 h-8 rounded overflow-hidden border flex-shrink-0'>
+																	<Image
+																		width={64}
+																		height={64}
+																		src={imageUrl}
+																		alt={`Preview ${imgIndex + 1}`}
+																		className='w-full h-full object-cover'
+																		onError={(e) => (e.target.src = '/placeholder-image.png')}
+																	/>
+																</div>
+															)}
+															<button
+																onClick={() => {
+																	const newImages = (project.images || [project.imageSrc]).filter((_, i) => i !== imgIndex);
+																	editProjects(index, {
+																		...project,
+																		images: newImages.length > 0 ? newImages : [project.imageSrc],
+																	});
+																}}
+																className='px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-medium transition-colors'
+																type='button'
+															>
+																Remove
+															</button>
+														</div>
+													))}
+													<button
+														onClick={() => {
+															const currentImages = project.images || [project.imageSrc];
+															editProjects(index, {
+																...project,
+																images: [...currentImages, ''],
+															});
+														}}
+														className='w-full py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'
+														type='button'
+													>
+														+ Add Another Image
+													</button>
+												</div>
+												<p className='text-xs text-gray-500 mt-1'>
+													First image will be used as the main thumbnail
+												</p>
+											</div>
+
 											<div>
 												<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
 													Project URL
