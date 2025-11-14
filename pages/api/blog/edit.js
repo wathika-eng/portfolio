@@ -4,6 +4,18 @@ import matter from "gray-matter";
 
 export default function handler(req, res) {
   const postsfolder = join(process.cwd(), `/_posts/`);
+
+  // Disallow non-localhost requests for write operations
+  const host = req.headers['x-forwarded-host'] || req.headers.host || '';
+  const isLocalhost = (h) => {
+    if (!h) return false;
+    return h.includes('localhost') || h.startsWith('127.') || h === '::1';
+  };
+
+  if (!isLocalhost(host)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   if (process.env.NODE_ENV === "development") {
     if (req.method === "POST") {
       const { date, title, tagline, preview, image } = req.body.variables;

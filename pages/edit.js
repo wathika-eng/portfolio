@@ -1018,4 +1018,31 @@ const Edit = () => {
 	);
 };
 
+// Server-side protection: only allow access to this page when served from localhost
+export async function getServerSideProps(context) {
+	const req = context.req;
+	const host = (req.headers['x-forwarded-host'] || req.headers.host || '').toString();
+
+	const isLocalhost = () => {
+		if (!host) return false;
+		// host may include port (localhost:3000)
+		return (
+			host.includes('localhost') ||
+			host.startsWith('127.') ||
+			host === '::1'
+		);
+	};
+
+	if (!isLocalhost()) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		};
+	}
+
+	return { props: {} };
+}
+
 export default Edit;

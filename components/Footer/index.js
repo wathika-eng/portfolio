@@ -43,7 +43,7 @@ const Footer = ({}) => {
 			<div className='py-8 border-t border-gray-200 dark:border-gray-800 mt-16'>
 				<div className='max-w-7xl mx-auto px-4 laptop:px-8 flex flex-col tablet:flex-row justify-between items-center gap-4'>
 					<p className='text-gray-600 dark:text-gray-400 text-sm'>
-						© 2024 Joseph Wathika. All rights reserved.
+						© 2025 Joseph Wathika. All rights reserved.
 					</p>
 					<p className='text-gray-600 dark:text-gray-400 text-sm'>
 						Built with Next.js & Tailwind CSS
