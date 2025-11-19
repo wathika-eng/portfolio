@@ -35,9 +35,7 @@ import {
 	SiFlutter,
 	SiPostman
 } from 'react-icons/si';// Local Data
-import data from '../data/portfolio.json';
-
-export default function Home() {
+export default function Home({ data }) {
 	// Ref
 	const workRef = useRef();
 	const aboutRef = useRef();
@@ -339,4 +337,15 @@ export default function Home() {
 			</div>
 		</div>
 	);
+}
+
+export async function getStaticProps() {
+	// Read local portfolio data at build time. Use revalidate to enable ISR.
+	const data = await import('../data/portfolio.json').then((m) => m.default || m);
+
+	return {
+		props: { data },
+		// Rebuild the page in the background at most once every 60 seconds
+		revalidate: 60,
+	};
 }
