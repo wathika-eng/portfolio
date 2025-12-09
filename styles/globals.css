@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import "./markdown.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "./markdown.css";
 
 * {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
@@ -200,7 +200,7 @@ a:focus:not(:focus-visible) {
   background: linear-gradient(-45deg, #45caff 0%, #ff1b6b 100%);
   transform: translate3d(0px, 20px, 0) scale(0.95);
   filter: blur(20px);
-  opacity: var(0.7);
+  opacity: 0.7;
   transition: opacity 0.3s;
   border-radius: inherit;
 }
